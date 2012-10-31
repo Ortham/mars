@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>MARS Readme</title>
+<style>
+body {font-family:Helvetica,sans-serif;font-size:10pt;}
+code {display:inline-block; padding:2px 5px; background:#eee;}
+figcaption {font-style:italic; margin-bottom:2em;}
+h2 {margin-top:4em;}
+h3 {margin-top:3em;}
+</style>
+
+<h1>MARS Readme</h1>
+
+<h2>Introduction</h2>
+<p>MARS (Measurement Auto-Repeat Software) is a small application written in Visual Basic that allows the automated testing of devices over a given period of time at given intervals using the Agilent B2900A Precision SMU.
+<p>MARS can perform multiple sets of transfer and output measurements at regular intervals.
+<p>For a transfer measurement, it performs a series of measurements through a sweep at uniform step size over a range of drain voltages, with a double sweep (start to end to start) over a range of gate voltages performed at each drain voltage sweep step.
+<p>For an output measurement, it performs a series of measurements through a sweep at uniform step size over a range of gate voltages, with a double sweep (start to end to start) over a range of drain voltages performed at each drain voltage sweep step.
+<p><b>Note:</b> MARS requires .NET Framework 4 to be installed.
+<p>(The application is named as it is because Curiosity landed on the same day that I finished it, and I couldn't think of a name.)
+
+<h2>Usage</h2>
+<p>Note that none of the controls have any value validation, so it is possible to specify values higher or lower than the Agilent device can handle. In some cases specifying such a value will result in an error message being displayed, but in others the error will occur silently. It is recommended that you perform a test run to ensure the values you provide are valid.
+<h3>Global Controls</h3>
+<p>These controls either control how MARS runs, or affect how both transfer and output measurements are performed.
+<h4>Device Address</h4>
+<p>This is the port through which the Aglient unit is connected to the PC. MARS does not include any port scanning functionality to find which is the correct port, but the measurement software that is part of the software suite bundled with the Aglient unit can be used to find the port, then it copy/pasted into this text box.
+<h4>Output Location</h4>
+<p>The location to which MARS will save its output files. Clicking on the text box will display a folder selection dialog.
+<h4>File Label</h4>
+<p>The label used in the saved data filenames, which will be of the form <code>transfer-<var>label</var>.csv</code> and <code>output-<var>label</var>.csv</code>.
+<h4>No. of Measurement Sets</h4>
+<p>One set of measurements consists of two transfer measurements and two output measurements, with MARS saving the data from the second of each. This text box specifies the total number of measurement sets that will be performed when the <q>Run</q> button is clicked.
+<h4>Repeat Interval</h4>
+<p>The interval in seconds between each set of measurements, counted from the end of one set of measurements to the start of the next set of measurements.
+<h4>Run</h4>
+<p>Clicking this button will begin a run of however many measurement sets are specified. If a run is already in progress when the button is clicked, a message box will be displayed asking if you wish to cancel the current run and begin a new run. Cancelling the current run may take some time.
+<p>While a run is in progress, the status bar will display its current set and the total number of sets in that run.
+<h4>Close</h4>
+<p>Clicking this button will close MARS. If a run is in progress when the button is clicked, a confirmation dialog will be displayed.
+<h3>Transfer &amp; Output Controls</h3>
+<p>These controls affect the voltage ranges and step sizes of transfer and ouput measurements. The controls displayed on the <q>Transfer</q> tab are for transfer measurements, and those displayed on the <q>Output</q> tab are for output measurements. The two tabs are independent of one another.
+<h4>Gate Start</h4>
+<p>The start voltage, in volts, across the device gate.
+<h4>Gate Stop</h4>
+<p>The end voltage, in volts, across the device gate.
+<h4>Gate Step Count</h4>
+<p>The number of steps to be taken in getting from the gate's start voltage to the gate's end voltage. The step size is uniform and is displayed in the read-only text box next to this control.
+<h4>Drain Start</h4>
+<p>The start voltage, in volts, across the device drain.
+<h4>Drain Stop</h4>
+<p>The end voltage, in volts, across the device drain.
+<h4>Drain Step Count</h4>
+<p>The number of steps to be taken in getting from the drain's start voltage to the drain's end voltage. The step size is uniform and is displayed in the read-only text box next to this control.
+<h3>Common Controls</h3>
+<p>These controls affect both transfer and output measurements.
+<h4>Gate Bias Voltage</h4>
+<p>The voltage, in volts, to apply across the gate between measurement sets. This voltage is applied for the duration of the repeat interval.
+<h4>Drain Bias Voltage</h4>
+<p>The voltage, in volts, to apply across the drain between measurement sets. This voltage is applied for the duration of the repeat interval.
+<h4>Compliance</h4>
+<p>The current compliance in amperes used for drain and source currents in transfer and output measurements.
+<h4>Measurement Delay</h4>
+<p>The delay in seconds between setting the voltage for a single measurement pair (voltage and current) and making the measurements of voltage and current.
+<h4>Measurement Aperture</h4>
+<p>The integration time in seconds for a single measurement.
+
+<h2>Outputs</h2>
+<p>MARS saves the data it records in CSV files with column headings of <q>Point</q>, <q>Gate Voltage</q>, <q>Gate Current</q>, <q>Gate Time</q>, <q>Drain Voltage</q>, <q>Drain Current</q>, <q>Drain Time</q>, <q>Abs Gate Current</q> and <q>Abs Drain Current</q>.
+<p>To plot a transfer curve, the values in the <q>Gate Voltage</q>, <q>Abs Gate Current</q> and <q>Abs Drain Current</q> columns should be used. To plot an output curve, the values in the <q>Gate Voltage</q>, <q>Gate Current</q> and <q>Drain Current</q> columns should be used.
+<p>If only one measurement set is run, then the CSV files will be stored in the folder that is specified by the <q>Output Location</q> text box. If multiple measurement sets are run, then each set's CSV files will be stored in a different subfolder of the folder specified by the <q>Output Location</q> text box, with the subfolders being named <code>Set <var>N</var></code> where <var>N</var> is the set number.
+
+<h2>License</h2>
+<p>MARS is copyright &copy; 2012 Oliver Hamlet, and is licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License v3.0</a>.
